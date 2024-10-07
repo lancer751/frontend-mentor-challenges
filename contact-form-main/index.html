@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <!-- styles css -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <title>Frontend Mentor | Contact form</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+
+  <div class="form form--container">
+    <form action="" class="form--content">
+      <h3 class="form__title">Contact Us</h3>
+      <div class="form__inputs">
+        <div class="form__fields form__fields--2">
+          <div class="form__field--container">
+            <label for="first-name">
+              First Name
+            </label>
+            <input type="text" name="first-name" required  aria-required="true">
+          </div>
+          
+          <div class="form__field--container">
+            <label for="last-name" aria-required="true">
+              Last Name
+            </label>
+            <input type="text" name="last-name" required aria-required="true">
+          </div>
+        </div>
+  
+        <div class="form__fields form__fields--1">
+          <label for="user-email">
+            Email Address
+          </label>
+          <input type="email" name="user-email" required aria-required="true">
+        </div>
+  
+        <div class="form__fields">
+          <label for="first-name">
+            Query Type
+          </label>
+          <div class=" form__fields--2">
+            <div class="query__options">
+              <input type="radio" name="query-type" required aria-required="true" value="General Enquiry">
+              <span>General Enquiry</span>
+            </div>
+
+            <div class="query__options">
+              <input type="radio" name="query-type" required aria-required="true" value="Support Request">
+              <span>Support Request</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form__fields form__fields--1">
+          <label for="user-message">
+            Message
+          </label>
+          <textarea name="user-message" rows="4" id="userMessage"></textarea>
+        </div>
+  
+        <label class="form_fields--checkbox" for="user-permission">
+          <input type="checkbox" name="condiciones" required>
+          <span>I consent to being contacted by the team</span>
+        </label>
+          
+      </div>
+  
+      <button class="form__submit" type="submit" id="form-btn">Submit</button>
+    </form>
+  </div>
+  
+
+  
+  <!--
+
+
+  Message Sent!
+  Thanks for completing the form. We'll be in touch soon! -->
+  
+  <!-- <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
+    Coded by <a href="#">Your Name Here</a>. -->
+  <!-- </div> -->
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
