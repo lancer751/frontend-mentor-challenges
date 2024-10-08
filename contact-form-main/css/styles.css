@@ -19,6 +19,7 @@
 
 body{
     background: var(--Green-200);
+    position: relative;
     min-height: 100vh;
     font-size: 16px;
     font-family: var(--Karla);
@@ -50,10 +51,11 @@ body{
 
 .form__inputs{
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     flex-direction: column;
-    row-gap: 1.5rem;
+    row-gap: 1.2rem;
 }
+
 .form__fields{
     display: flex;
     flex-direction: column;
@@ -62,7 +64,7 @@ body{
 .form__fields--2{
     display: flex;
     flex-direction: column;
-    row-gap: 1.5rem;
+    row-gap: 1.2rem;
     margin-top: 1rem;
 }
 
@@ -161,7 +163,55 @@ body{
 }
 
 
+.toast{
+    opacity: 0;
+    background-color: var(--Grey-900);
+    color: var(--White);
+    font-size: 14px;
+    position: fixed;
+    z-index: 10;
+    top: -6rem;
+    margin: 0 auto;
+    padding: 1.3rem 1.4rem;
+    border-radius: 10px;
+    transition: opacity .5s, transform .5s;
+}
+
+.toast p{
+    margin: 0;
+}
+
+.toast__success{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toast__title{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.toast .toast__message{
+    color: var(--Grey-500);
+    margin-top: 14px;
+}
+
+.toast__show{
+    visibility: visible;
+    transform: translateY(120%);
+    opacity: 1;
+}
+
+.toast__hide{
+    opacity: 0; 
+    visibility: hidden;
+}
+
 @media screen and (min-width: 768px){
+    .form{
+        margin: 4rem auto;
+    }
     .form__fields--2{
         flex-direction: row;
         column-gap: 1.5rem;

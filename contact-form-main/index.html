@@ -11,14 +11,24 @@
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
-    .attribution { font-size: 11px; text-align: center; }
+    .attribution { font-size: 11px; text-align: center; 
+      position: absolute;
+      bottom: 20px;
+    }
     .attribution a { color: hsl(228, 45%, 44%); }
   </style>
 </head>
 <body>
+  <div class="toast" id="toast-success">
+    <p class="toast__success">
+      <img src="./assets/images/icon-success-check.svg" class="toast__icon" alt="success">
+      <span class="toast__title">Message Sent!</span>
+    </p>
+    <p class="toast__message">Thanks for completing the form. We'll be in touch soon!</p>
+  </div>
 
   <div class="form form--container">
-    <form action="" class="form--content">
+    <form action="" class="form--content" id="contact-form">
       <h3 class="form__title">Contact Us</h3>
       <div class="form__inputs">
         <div class="form__fields form__fields--2">
@@ -26,14 +36,14 @@
             <label for="first-name">
               First Name
             </label>
-            <input type="text" name="first-name" required  aria-required="true">
+            <input type="text" name="firstName" required  aria-required="true">
           </div>
           
           <div class="form__field--container">
             <label for="last-name" aria-required="true">
               Last Name
             </label>
-            <input type="text" name="last-name" required aria-required="true">
+            <input type="text" name="lastName" required aria-required="true">
           </div>
         </div>
   
@@ -41,7 +51,7 @@
           <label for="user-email">
             Email Address
           </label>
-          <input type="email" name="user-email" required aria-required="true">
+          <input type="email" name="email" required aria-required="true">
         </div>
   
         <div class="form__fields">
@@ -50,26 +60,26 @@
           </label>
           <div class=" form__fields--2">
             <div class="query__options">
-              <input type="radio" name="query-type" required aria-required="true" value="General Enquiry">
+              <input type="radio" name="queryType" required aria-required="true" value="General Enquiry">
               <span>General Enquiry</span>
             </div>
 
             <div class="query__options">
-              <input type="radio" name="query-type" required aria-required="true" value="Support Request">
+              <input type="radio" name="queryType" required aria-required="true" value="Support Request">
               <span>Support Request</span>
             </div>
           </div>
         </div>
   
         <div class="form__fields form__fields--1">
-          <label for="user-message">
+          <label for="message">
             Message
           </label>
-          <textarea name="user-message" rows="4" id="userMessage"></textarea>
+          <textarea name="message" rows="4" id="userMessage"></textarea>
         </div>
   
-        <label class="form_fields--checkbox" for="user-permission">
-          <input type="checkbox" name="condiciones" required>
+        <label class="form_fields--checkbox" for="acceptConditions">
+          <input type="checkbox" name="acceptConditions" value="accepted" required>
           <span>I consent to being contacted by the team</span>
         </label>
           
@@ -79,19 +89,13 @@
     </form>
   </div>
   
-
-  
-  <!--
-
-
-  Message Sent!
-  Thanks for completing the form. We'll be in touch soon! -->
-  
-  <!-- <div class="attribution">
+  <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>. -->
-  <!-- </div> -->
+    Coded by <a href="https://github.com/lancer751">LancerCode</a>.
+  </div>
 
   <script src="./js/script.js"></script>
+  <script src="./js/toast.js"></script>
+  <script src="./js/form-validation.js"></script>
 </body>
 </html>

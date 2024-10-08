@@ -14,16 +14,21 @@ queryRatios.forEach(radio => {
     })
 })
 
+
 queryOptionsBox.forEach((box, index) => {
-    box.addEventListener('click', e => {
-        option = box.querySelector('input[type="radio"]')
+    let option = box.querySelector('input[type="radio"]');
+    
+    // Escuchamos el evento change del input radio
+    option.addEventListener('change', (e) => {
+        // Obtenemos el valor del radio button seleccionado
+        const selectedValue = e.target.value;
         
-        queryOptionsBox.forEach(option => {
-            option.classList.remove('selected-query')
-        })
-
-        box.classList.add('selected-query')
-
-        option.checked = true
-    })
-})
+        // Removemos la clase 'selected-query' de todos los boxes
+        queryOptionsBox.forEach(box => {
+            box.classList.remove('selected-query');
+        });
+        
+        // Agregamos la clase 'selected-query' al box actual
+        box.classList.add('selected-query');
+    });
+});
