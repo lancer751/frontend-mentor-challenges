@@ -1,39 +1,47 @@
 const contactForm = document.querySelector('#contact-form')
-const dataInputs = contactForm.querySelectorAll('input')
+const btnSend = contactForm.querySelector('#form-btn')
 const dataTextarea = contactForm.querySelector('textarea')
+const inputFields = contactForm.querySelectorAll('input')
 
-console.log(dataInputs)
-const userInformation = {
-    firstName: null,
-    lastName: null,
-    email: null,
-    queryType: null,
-    message: null,
-    acceptConditions: null
+const dataForm = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    queryType: '',
+    message: '',
+    acceptConditions: ""
+}
+
+btnSend.addEventListener('click', validateForm);
+dataTextarea.addEventListener('input', fillFormData);
+inputFields.forEach(input => input.addEventListener('input', fillFormData))
+
+
+function fillFormData(e){
+    const field = e.target;
+
+    if(field.type !== 'checkbox'){
+        dataForm[field.name] = field.value
+    }else{
+        dataForm[field.name] = field.checked
+    }
 }
 
 
-dataInputs.forEach(input => {
-    input.addEventListener('input', validateField);
-})
+function validateForm(){
+    const isFormCompleted = Object.values(contactForm).some(field => field ==='')
+    const isEmailValid = checkEmail(contactForm.email)
 
-dataTextarea.addEventListener('input', validateField);
-
-
-function validateField(e){
-    e.preventDefault()
-
-    const field = e.target;
-    const elementType = field.type;
-
-    if(field.value !== '' && elementType !== 'checkbox'){
-        userInformation[field.name] = field.value;
-        return
+    if(!isFormCompleted || !isEmailValid){
+        showError()
     }
 
-    console.log(field.value)
+}
 
-
-    console.log(userInformation)
+function showError(dataForm){
     
+}
+
+function checkEmail(email){
+
 }
