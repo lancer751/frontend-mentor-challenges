@@ -38,8 +38,96 @@ function validateForm(){
 
 }
 
-function showError(dataForm){
+function showError(){
     
+    // Identifying which inputs are empties
+    const voidFiels = Object.keys(dataForm).filter(data => {
+        if(dataForm[data] !== ''){
+            return
+        }
+        return dataForm[data] === '';
+    })
+
+    console.log(voidFiels)
+    
+    voidFiels.forEach(fieldName => {
+        
+        const textElement = document.createElement('p')
+        textElement.classList.add('error-message');
+        let errorMessage = "";
+
+        if(fieldName === "firstName" || fieldName === "lastName" || fieldName === "message" || fieldName === "email"){
+            errorMessage = "This field is required"
+            textElement.textContent = errorMessage;
+        }
+
+        if(fieldName === "queryType"){
+            errorMessage = "Please select a query type"
+            textElement.textContent = errorMessage;
+        }
+
+        if(fieldName === "acceptConditions"){
+            errorMessage = "To submit this item please consent to being contacted"
+            textElement.textContent = errorMessage;
+        }
+
+        inputFields.forEach(input => {
+            if(input.name !== fieldName) return
+
+            if(input.name === fieldName && input.type === 'text'){
+                const parentField = input.parentElement;
+                const existErrorMessage = parentField.querySelector('.error-message')
+                if(existErrorMessage){
+                    return
+                }
+
+                parentField.appendChild(textElement)
+                return
+            }
+
+            if(input.name === fieldName && input.type === 'email'){
+                const parentField = input.parentElement;
+                const existErrorMessage = parentField.querySelector('.error-message')
+                if(existErrorMessage){
+                    return
+                }
+                parentField.appendChild(textElement)
+                return
+            }
+
+            if(input.name === fieldName && input.type === 'radio'){
+                const parentField = input.parentElement.parentElement.parentElement;
+                const existErrorMessage = parentField.querySelector('.error-message')
+                if(existErrorMessage){
+                    return
+                }
+                parentField.appendChild(textElement)
+                console.log(input.parentElement.parentElement.parentElement)
+                return
+            }
+
+            if(input.name === fieldName && input.type === 'checkbox'){
+                const parentField = input.parentElement.parentElement;
+                const existErrorMessage = parentField.querySelector('.error-message')
+                if(existErrorMessage){
+                    return
+                }
+                parentField.appendChild(textElement)
+                return
+            }
+        });
+
+        if(fieldName === 'message'){
+            const parentField = dataTextarea.parentElement;
+            const existErrorMessage = parentField.querySelector('.error-message')
+            if(existErrorMessage){
+                return
+            }
+            parentField.appendChild(textElement)
+            return
+        }
+    })
+
 }
 
 function checkEmail(email){
