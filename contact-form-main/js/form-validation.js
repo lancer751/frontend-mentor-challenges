@@ -11,16 +11,7 @@ const inputEmailField = contactForm.querySelector('input[type="email"]')
 const inputsRatioField = contactForm.querySelectorAll('input[type="radio"]')
 const inputCheckboxField = contactForm.querySelector('input[type="checkbox"]')
 
-// const dataForm = {
-//     firstName: '',
-//     lastName: '',
-//     email: '',
-//     queryType: '',
-//     message: '',
-//     acceptConditions: ""
-// }
-
-btnSend.addEventListener('click', validateForm);
+contactForm.addEventListener('submit', validateForm);
 dataTextarea.addEventListener('input', checkField);
 inputsTextField.forEach(input => input.addEventListener('input', checkField))
 inputEmailField.addEventListener('input', checkField)
