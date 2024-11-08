@@ -46,7 +46,13 @@ function validateForm(e){
     const isValidEmail = checkEmail(userData.email)
     
     if(isFormFilled && isValidEmail){
-
+        const toast = document.querySelector('#toast-success');
+        
+        toast.classList.add('toast__show');
+    
+        setTimeout(() => {
+            toast.classList.remove('toast__show');
+        }, 3000);
         console.log('exitoso')
         return
     }
