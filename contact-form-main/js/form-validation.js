@@ -1,135 +1,196 @@
 const contactForm = document.querySelector('#contact-form')
 const btnSend = contactForm.querySelector('#form-btn')
 const dataTextarea = contactForm.querySelector('textarea')
-const inputFields = contactForm.querySelectorAll('input')
+const firstNameBox = contactForm.querySelector('#firstNameBox')
+const lastNameBox = contactForm.querySelector('#lastNameBox')
+const emailBox = contactForm.querySelector('#emailBox')
+const quetyTypeRatioContainer = contactForm.querySelector('#queryOptionContainer')
+const consentBox = contactForm.querySelector('#consetBox')
+const inputsTextField = contactForm.querySelectorAll('input[type="text"]')
+const inputEmailField = contactForm.querySelector('input[type="email"]')
+const inputsRatioField = contactForm.querySelectorAll('input[type="radio"]')
+const inputCheckboxField = contactForm.querySelector('input[type="checkbox"]')
 
-const dataForm = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    queryType: '',
-    message: '',
-    acceptConditions: ""
-}
+// const dataForm = {
+//     firstName: '',
+//     lastName: '',
+//     email: '',
+//     queryType: '',
+//     message: '',
+//     acceptConditions: ""
+// }
 
 btnSend.addEventListener('click', validateForm);
-dataTextarea.addEventListener('input', fillFormData);
-inputFields.forEach(input => input.addEventListener('input', fillFormData))
+dataTextarea.addEventListener('input', checkField);
+inputsTextField.forEach(input => input.addEventListener('input', checkField))
+inputEmailField.addEventListener('input', checkField)
+inputsRatioField.forEach(input => input.addEventListener('input', checkField))
+inputCheckboxField.addEventListener('change', checkField)
 
 
-function fillFormData(e){
-    const field = e.target;
+function validateForm(e){
+    e.preventDefault()
+    const formData = new FormData(contactForm)
+    const userData = Object.fromEntries(formData.entries())
+    console.log(userData)
 
-    if(field.type !== 'checkbox'){
-        dataForm[field.name] = field.value
-    }else{
-        dataForm[field.name] = field.checked
-    }
-}
-
-
-function validateForm(){
-    const isFormCompleted = Object.values(contactForm).some(field => field ==='')
-    const isEmailValid = checkEmail(contactForm.email)
-
-    if(!isFormCompleted || !isEmailValid){
-        showError()
+    if(userData.acceptConditions === undefined){
+        userData.acceptConditions = ''
     }
 
-}
+    if(userData.queryType === undefined){
+        userData.queryType = ''
+    }
 
-function showError(){
+    const isFormFilled = Object.values(userData).every(field => field !== '')
+    const isValidEmail = checkEmail(userData.email)
     
-    // Identifying which inputs are empties
-    const voidFiels = Object.keys(dataForm).filter(data => {
-        if(dataForm[data] !== ''){
-            return
+    if(isFormFilled && isValidEmail){
+
+        console.log('exitoso')
+        return
+    }
+    
+    for(let field in userData){
+        if(userData[field] === ''){
+            showMessageError(field)
         }
-        return dataForm[data] === '';
-    })
-
-    console.log(voidFiels)
+        if(field === 'email' && !isValidEmail && userData[field] !== ''){
+            showMessageError(field, !isValidEmail)
+        }
+    }
     
-    voidFiels.forEach(fieldName => {
+}
+
+function checkField(e){
+    const typeField = e.target.type
+    const fieldElement = e.target
+
+    if(typeField === 'text' || typeField === 'textarea'){
+        const fieldBox = fieldElement.parentElement
+        cleanErrorMessage(fieldBox)
+        return
+    }
+
+    if(typeField === 'email'){
+        const fieldBox = fieldElement.parentElement
+        const isValidEmail = checkEmail(fieldElement.value)
+        console.log(isValidEmail)
+        if(!isValidEmail) {
+            showMessageError(typeField, !isValidEmail); return
+        }
         
-        const textElement = document.createElement('p')
-        textElement.classList.add('error-message');
-        let errorMessage = "";
+        cleanErrorMessage(fieldBox)
+        return
+    }
 
-        if(fieldName === "firstName" || fieldName === "lastName" || fieldName === "message" || fieldName === "email"){
-            errorMessage = "This field is required"
-            textElement.textContent = errorMessage;
+    if(typeField === 'radio'){
+        const isSelected = e.target.checked
+        const fieldBox = fieldElement.parentElement.parentElement.parentElement
+
+        if(isSelected){
+            cleanErrorMessage(fieldBox)  
+        }
+        return
+    }
+
+    if(typeField === 'checkbox'){
+        const isChecked = e.target.checked
+        const fieldBox = fieldElement.parentElement.parentElement
+
+        if(isChecked){
+            cleanErrorMessage(fieldBox)  
+        }
+        return
+    }
+
+}
+
+function showMessageError(fieldName, invalidEmail = false){
+    const { textErrorElement } = generateErrorMessage(fieldName, invalidEmail)
+    console.log(invalidEmail)
+
+    if(fieldName === 'firstName'){
+        cleanErrorMessage(firstNameBox)
+        firstNameBox.appendChild(textErrorElement)
+        return
+    }
+
+    if(fieldName === 'email'){
+        cleanErrorMessage(emailBox)
+        emailBox.appendChild(textErrorElement)
+        return
+    }
+
+    if(fieldName === 'lastName'){
+        cleanErrorMessage(lastNameBox)
+        lastNameBox.appendChild(textErrorElement)
+        return
+    }
+
+    if(fieldName === 'queryType'){
+        cleanErrorMessage(quetyTypeRatioContainer)
+        quetyTypeRatioContainer.appendChild(textErrorElement)
+        return
+    }
+
+    if(fieldName === 'acceptConditions'){
+        cleanErrorMessage(consentBox)
+        consentBox.appendChild(textErrorElement)
+        return
+    }
+
+    if(fieldName === 'message'){
+        const messageBox = dataTextarea.parentElement
+        cleanErrorMessage(messageBox)
+        
+        messageBox.appendChild(textErrorElement)
+        return
+    }
+}
+
+function generateErrorMessage(fieldName, invalidEmail = false){
+    const textErrorElement = document.createElement('p')
+    textErrorElement.classList.add('error-message');
+    let errorMessage = "";
+
+    if(fieldName === "firstName" || fieldName === "lastName" || fieldName ===   "message" || fieldName === "email"){
+        console.log(invalidEmail)
+
+        if(invalidEmail){
+            errorMessage = "Please enter a valid email address"
+            textErrorElement.textContent = errorMessage;
+             return { textErrorElement }
         }
 
-        if(fieldName === "queryType"){
-            errorMessage = "Please select a query type"
-            textElement.textContent = errorMessage;
-        }
+        errorMessage = "This field is required"
+        textErrorElement.textContent = errorMessage;
+         return { textErrorElement }
+    }
 
-        if(fieldName === "acceptConditions"){
-            errorMessage = "To submit this item please consent to being contacted"
-            textElement.textContent = errorMessage;
-        }
+    if(fieldName === "queryType"){
+        errorMessage = "Please select a query type"
+        textErrorElement.textContent = errorMessage;
+         return { textErrorElement }
+    }
+    
+    if(fieldName === "acceptConditions"){
+        errorMessage = "To submit this item please consent to being contacted"
+        textErrorElement.textContent = errorMessage;
+         return { textErrorElement }
+    }
+}
 
-        inputFields.forEach(input => {
-            if(input.name !== fieldName) return
-
-            if(input.name === fieldName && input.type === 'text'){
-                const parentField = input.parentElement;
-                const existErrorMessage = parentField.querySelector('.error-message')
-                if(existErrorMessage){
-                    return
-                }
-
-                parentField.appendChild(textElement)
-                return
-            }
-
-            if(input.name === fieldName && input.type === 'email'){
-                const parentField = input.parentElement;
-                const existErrorMessage = parentField.querySelector('.error-message')
-                if(existErrorMessage){
-                    return
-                }
-                parentField.appendChild(textElement)
-                return
-            }
-
-            if(input.name === fieldName && input.type === 'radio'){
-                const parentField = input.parentElement.parentElement.parentElement;
-                const existErrorMessage = parentField.querySelector('.error-message')
-                if(existErrorMessage){
-                    return
-                }
-                parentField.appendChild(textElement)
-                console.log(input.parentElement.parentElement.parentElement)
-                return
-            }
-
-            if(input.name === fieldName && input.type === 'checkbox'){
-                const parentField = input.parentElement.parentElement;
-                const existErrorMessage = parentField.querySelector('.error-message')
-                if(existErrorMessage){
-                    return
-                }
-                parentField.appendChild(textElement)
-                return
-            }
-        });
-
-        if(fieldName === 'message'){
-            const parentField = dataTextarea.parentElement;
-            const existErrorMessage = parentField.querySelector('.error-message')
-            if(existErrorMessage){
-                return
-            }
-            parentField.appendChild(textElement)
-            return
-        }
-    })
-
+function cleanErrorMessage(inputBox){
+    const existErrorMessage = inputBox.querySelector('.error-message')
+    
+    if(existErrorMessage){
+        existErrorMessage.remove('error-message')
+    }
 }
 
 function checkEmail(email){
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    return regex.test(email)
 }

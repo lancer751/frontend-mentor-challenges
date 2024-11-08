@@ -32,40 +32,40 @@
       <h3 class="form__title">Contact Us</h3>
       <div class="form__inputs">
         <div class="form__fields form__fields--2">
-          <div class="form__field--container">
+          <div class="form__field--container" id="firstNameBox">
             <label for="first-name">
               First Name
             </label>
-            <input type="text" name="firstName" required  aria-required="true">
+            <input type="text" name="firstName" id="firstName" aria-required="true">
           </div>
           
-          <div class="form__field--container">
+          <div class="form__field--container" id="lastNameBox">
             <label for="last-name" aria-required="true">
               Last Name
             </label>
-            <input type="text" name="lastName" required aria-required="true">
+            <input type="text" name="lastName" id="lastName" aria-required="true">
           </div>
         </div>
   
-        <div class="form__fields form__fields--1">
+        <div class="form__fields form__fields--1" id="emailBox">
           <label for="user-email">
             Email Address
           </label>
-          <input type="email" name="email" required aria-required="true">
+          <input type="email" name="email" id="email">
         </div>
   
-        <div class="form__fields">
+        <div class="form__fields"  id="queryOptionContainer">
           <label for="first-name">
             Query Type
           </label>
           <div class=" form__fields--2">
             <div class="query__options">
-              <input type="radio" name="queryType" required aria-required="true" value="General Enquiry">
+              <input type="radio" name="queryType" aria-required="true" value="General Enquiry">
               <span>General Enquiry</span>
             </div>
 
             <div class="query__options">
-              <input type="radio" name="queryType" required aria-required="true" value="Support Request">
+              <input type="radio" name="queryType" aria-required="true" value="Support Request">
               <span>Support Request</span>
             </div>
           </div>
@@ -78,16 +78,16 @@
           <textarea name="message" rows="4" id="userMessage"></textarea>
         </div>
   
-        <div class="">
+        <div class="" id="consetBox">
           <label class="form_fields--checkbox" for="acceptConditions">
-            <input type="checkbox" id="consent" name="acceptConditions" value="accepted" required>
+            <input type="checkbox" id="consent" name="acceptConditions" value="accepted">
             <span>I consent to being contacted by the team</span>
           </label>
         </div>
           
       </div>
   
-      <button class="form__submit" type="button" id="form-btn">Submit</button>
+      <button class="form__submit" type="submit" id="form-btn">Submit</button>
     </form>
   </div>
   
