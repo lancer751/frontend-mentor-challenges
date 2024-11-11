@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Advice generator app</title>
+  <!-- goggle fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <!-- styles css -->
+   <link rel="stylesheet" href="./css/styles.css">
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+
+  <div class="advice__box" id="advice-box">
+    <h3 class="advice__number">Advice <span></span></h3>
+    <div class="advice__content">
+      <p class="advice__recieved"></p>
+      <div class="loader" id="adviceLoader"></div>
+    </div>
+    <div class="advice__divider"></div>
+    <div class="btn__generator" id="btn-generator">
+        <img src="./images/icon-dice.svg"/>
+    </div>
+  </div>
+  
+  <!-- <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Your Name Here</a>.
+  </div> -->
+  <script type="text/javascript">
+    const adviceBox = document.querySelector('#advice-box')
+    const adviceContentElement = adviceBox.querySelector('.advice__content')
+    const BASE_URL = 'https://api.adviceslip.com/advice'
+    const btnGenerator = document.querySelector('#btn-generator')
+    
+    async function fetchAdvice(){
+      const divLoader = adviceBox.querySelector('#adviceLoader')
+
+      try{
+        const res = await fetch(BASE_URL)
+        const data = await res.json()
+        divLoader.style.display = 'block'
+        return data.slip
+      }catch(e){
+        console.error('Error al obtener el response' + e)
+      }finally{
+        divLoader.style.display = 'none'
+      }
+    }
+
+    const showNewAdvice = async () => {
+      const adviceNumberElement = adviceBox.querySelector('.advice__number span');
+      const adviceParagraph = adviceContentElement.querySelector('.advice__recieved');
+
+      const { id, advice } = await fetchAdvice();
+
+      // Actualizar el texto del párrafo existente en lugar de crear uno nuevo
+      adviceParagraph.textContent = `"${advice}"`;
+      adviceNumberElement.textContent = `#${id}`;
+    };
+
+
+    showNewAdvice()
+
+    btnGenerator.addEventListener('click', showNewAdvice)
+
+  </script>
+</body>
+</html>

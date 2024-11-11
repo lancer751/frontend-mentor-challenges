@@ -1,0 +1,127 @@
+@import url('./normalize.css');
+
+:root{
+    --Light-Cyan: hsl(193, 38%, 86%);
+    --Neon-Green: hsl(150, 100%, 66%);
+    --Grayish-Blue: hsl(217, 19%, 38%);
+    --Dark-Grayish-Blue: hsl(217, 19%, 24%);
+    --Dark-Blue: hsl(218, 23%, 16%);
+}
+
+
+@keyframes fade-in{
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body{
+    font-size: 28px;
+    font-family: "Manrope", serif;
+    background: var(--Dark-Blue);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.advice__box{
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 2.5em;
+    background-color: var(--Dark-Grayish-Blue);
+    border-radius: 0.3em;
+    text-align: center;
+    position: relative;
+}
+
+.advice__number{
+    color: var(--Neon-Green);
+    margin: 0;
+    font-size: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.advice__content{
+    margin: 1em 0;
+}
+
+.advice__recieved{
+    color: var(--Light-Cyan);
+    font-weight: 600;
+    font-size: 0.9em;
+    line-height: 1.3;
+    margin: 0;
+    animation: fade-in 0.5s ease-in;
+}
+
+.advice__divider{
+    display: block;
+    height: 15px;
+    width: 100%;
+    background-image: url('../images/pattern-divider-mobile.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.advice__divider img{
+    width: 100%;
+}
+
+.btn__generator{
+    position: absolute;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    bottom: -25px;
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%); /* Centrar el botón usando transform */
+    align-items: center;
+    border-radius: 50%;
+    width: 1em;
+    height: 1em;
+    padding: 1em;
+    background-color: var(--Neon-Green);
+    transition-property: box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--Light-Cyan);
+    border-bottom-color: var(--Neon-Green);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+
+.btn__generator:hover{
+    box-shadow: 0 0 1em var(--Neon-Green);
+}
+
+@media (min-width: 768px){
+    .advice__divider{
+        background-image: url('../images/pattern-divider-desktop.svg');
+    }
+}
